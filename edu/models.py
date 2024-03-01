@@ -17,3 +17,20 @@ class StudentExtra_info(models.Model):
         return self.user.id
     def __str__(self):
         return self.user.first_name
+
+
+class TeacherExtra_info(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    salary = models.PositiveIntegerField(null=False)
+    joindate=models.DateField(auto_now_add=True)
+    mobile = models.CharField(max_length=40,null=True)
+    #cl= models.CharField(max_length=10,choices=classes,default='one')
+    status=models.BooleanField(default=False)
+    @property
+    def get_name(self):
+        return self.user.first_name+" "+self.user.last_name
+    @property
+    def get_id(self):
+        return self.user.id
+    def __str__(self):
+        return self.user.first_name

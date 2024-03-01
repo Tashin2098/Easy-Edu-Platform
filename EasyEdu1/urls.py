@@ -27,12 +27,14 @@ urlpatterns = [
     path('admin-signup',views.admin_signup_view),
     path('student-page',views.studentDash),
     path("student-signup",views.student_signup),
+    path("teacher-signup",views.teacher_signup),
     path('teacher-page',views.teacherView),
     path('adminlogin', LoginView.as_view(template_name='adminlogin.html')),
     path('studentlogin', LoginView.as_view(template_name='studentlogin.html')),
-
+    path('teacherlogin', LoginView.as_view(template_name='teacherlogin.html')),
     path('afterlogin', views.afterlogin,name='afterlogin'),
     path('logout', LogoutView.as_view(template_name='index.html'),name='logout'),
     path('admin-dashboard', views.admin_dashboard_view,name='admin-dashboard'),
     path('student-dashboard', views.student_dashboard_view,name='student-dashboard'),
+    path('teacher-dashboard', views.teacher_dashboard_view,name='teacher-dashboard'),
 ]

@@ -59,10 +59,34 @@ def student_signup(request):
 
     return render(request, "student_signup.html",context=mydict)
 
+def teacher_signup(request):
+    form1=forms.TeacherUserForm()
+    form2=forms.TeacherExtra_info_form()
+    mydict={'form1':form1,'form2':form2}
+    if request.method=='POST':
+        form1=forms.TeacherUserForm(request.POST)
+        form2=forms.TeacherExtra_info_form(request.POST)
+        if form1.is_valid() and form2.is_valid():
+            user=form1.save()
+            user.set_password(user.password)
+            user.save()
+            f2=form2.save(commit=False)
+            f2.user=user
+            f2.save()
+            my_teacher_group = Group.objects.get_or_create(name='TEACHER')
+            my_teacher_group[0].user_set.add(user)
+        return HttpResponseRedirect('teacherlogin')
+    
+
+
+    return render(request, "teacher_signup.html",context=mydict)
+
 def is_admin(user):
     return user.groups.filter(name='ADMIN').exists()
 def is_student(user):
     return user.groups.filter(name='STUDENT').exists()
+def is_teacher(user):
+    return user.groups.filter(name='TEACHER').exists()
 
 def afterlogin(request):
     if is_admin(request.user):
@@ -73,6 +97,13 @@ def afterlogin(request):
              return redirect('student-dashboard')
          else:
              return render(request,'std_wait_forapprove.html')
+         
+    elif is_teacher(request.user):
+         accountapproval=models.TeacherExtra_info.objects.all().filter(user_id=request.user.id,status=True)
+         if accountapproval:
+             return redirect('teacher-dashboard')
+         else:
+             return render(request,'teacher_wait_forapprove.html')
 
 
 @login_required(login_url='adminlogin')
@@ -84,3 +115,8 @@ def admin_dashboard_view(request):
 @user_passes_test(is_student)
 def student_dashboard_view(request):
     return render(request,'student_dashboard.html')
+
+@login_required(login_url='teacherlogin')
+@user_passes_test(is_teacher)
+def teacher_dashboard_view(request):
+    return render(request,'teacher_dashboard.html')
