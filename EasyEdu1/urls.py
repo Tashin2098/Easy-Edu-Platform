@@ -36,6 +36,8 @@ urlpatterns = [
     path('afterlogin', views.afterlogin,name='afterlogin'),
     path('logout', LogoutView.as_view(template_name='index.html'),name='logout'),
     path('admin-dashboard', views.admin_dashboard_view,name='admin-dashboard'),
+    path('admin-teacher', views.admin_teacherview,name='admin-teacher'),
+    path('admin-student', views.admin_studentview,name='admin-student'),
     path('student-dashboard', views.student_dashboard_view,name='student-dashboard'),
     path('teacher-dashboard', views.teacher_dashboard_view,name='teacher-dashboard'),
     path('password_reset',auth_views.PasswordResetView.as_view(template_name='password_reset_form.html'),name='password_reset'),

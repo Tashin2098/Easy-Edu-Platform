@@ -111,6 +111,16 @@ def afterlogin(request):
 def admin_dashboard_view(request):
     return render(request,'admin_dashboard.html')
 
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_teacherview(request):
+    return render(request,'admin_teacher.html')
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_studentview(request):
+    return render(request,'admin_student.html')
+
 @login_required(login_url='studentlogin')
 @user_passes_test(is_student)
 def student_dashboard_view(request):
