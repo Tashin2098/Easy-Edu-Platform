@@ -155,6 +155,31 @@ def admin_view_teacher_view(request):
 
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
+def admin_add_teacher_view(request):
+    form1=forms.TeacherUserForm()
+    form2=forms.TeacherExtra_info_form()
+    mydict={'form1':form1,'form2':form2}
+    if request.method=='POST':
+        form1=forms.TeacherUserForm(request.POST)
+        form2=forms.TeacherExtra_info_form(request.POST)
+        if form1.is_valid() and form2.is_valid():
+            user=form1.save()
+            user.set_password(user.password)
+            user.save()
+
+            f2=form2.save(commit=False)
+            f2.user=user
+            f2.status=True
+            f2.save()
+
+            my_teacher_group = Group.objects.get_or_create(name='TEACHER')
+            my_teacher_group[0].user_set.add(user)
+
+        return HttpResponseRedirect('admin-teacher')
+    return render(request,'admin_add_teacher.html',context=mydict)
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
 def admin_approve_teacher_view(request):
     teachers=models.TeacherExtra_info.objects.all().filter(status=False)
     return render(request,'admin_approve_teacher.html',{'teachers':teachers})
@@ -197,3 +222,17 @@ def student_dashboard_view(request):
 @user_passes_test(is_teacher)
 def teacher_dashboard_view(request):
     return render(request,'teacher_dashboard.html')
+
+
+@login_required(login_url='teacherlogin')
+@user_passes_test(is_teacher)
+def teacher_dashboard_view(request):
+    teacherdata=models.TeacherExtra_info.objects.all().filter(status=True,user_id=request.user.id)
+    #notice=models.Notice.objects.all()
+    mydict={
+        'salary':teacherdata[0].salary,
+        'mobile':teacherdata[0].mobile,
+        'date':teacherdata[0].joindate,
+        # 'notice':notice
+    }
+    return render(request,'teacher_dashboard.html',context=mydict)
