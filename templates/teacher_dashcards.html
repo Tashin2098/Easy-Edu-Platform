@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <style type="text/css">
+   /* Updated CSS for card styling */
+
+/* Updated CSS for card styling */
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    background-color: #fff;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-block {
+    padding: 20px;
+}
+
+.card h6 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #333;
+}
+
+.order-card i {
+    font-size: 36px;
+    margin-right: 15px;
+    color: #555;
+}
+
+.card p {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+}
+
+/* Gradient backgrounds */
+.bg-c-blue {
+    background: linear-gradient(45deg, #FF5722 , #2c3e50);
+}
+
+.bg-c-green {
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+}
+
+.bg-c-yellow {
+    background: linear-gradient(45deg, #f1c40f, #f39c12);
+}
+
+.bg-c-pink {
+    background: linear-gradient(45deg, #e91e63, #9b59b6);
+}
+
+
+  </style>
+</head>
+
+<body>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-xl-3">
+        <div class="card bg-c-blue order-card">
+          <div class="card-block">
+            <h6 class="m-b-20">Name</h6>
+            <h2 class="text-right"><i class="fas fa-user-tie f-left"></i></h2>
+            <p><span style="font-size: 20px;">{{request.user.first_name}}</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-xl-3">
+        <div class="card bg-c-green order-card">
+          <div class="card-block">
+            <h6 class="m-b-20">Mobile Number</h6>
+            <h2 class="text-right"><i class="fas fa-mobile-alt f-left"></i></h2>
+            <p><span style="font-size: 20px;">{{mobile}}</span></p>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-xl-3">
+        <div class="card bg-c-yellow order-card">
+          <div class="card-block">
+            <h6 class="m-b-20">Joining Date</h6>
+            <h2 class="text-right"><i class="fas fa-calendar-alt f-left"></i></h2>
+            <p><span style="font-size: 20px;">{{date}}</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-xl-3">
+        <div class="card bg-c-pink order-card">
+          <div class="card-block">
+            <h6 class="m-b-20">Salary</h6>
+            <h2 class="text-right"><i class="fas fa-rupee-sign f-left"></i></h2>
+            <p><span style="font-size: 20px;">{{salary}}</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+
+  </script>
+</body>
+
+</html>

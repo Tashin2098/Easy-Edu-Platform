@@ -33,10 +33,10 @@ nav ul li a {
 }
 
 .banner {
-    background-image: url('/static/images/page-banner.jpg');
+    background-image: url('/static/images/homepage.jpg');
     background-size: cover;
     background-position: center;
-    color: #fff;
+    color: black;
     text-align: center;
     padding: 300px 0;
 }

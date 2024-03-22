@@ -3,13 +3,13 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Admin View</title>
+  <title>Teacher View</title>
 
   <style media="screen">
     /* Header Styles */
     header {
       position: fixed;
-      background: #2c3e50; /* Changed dark grey to a different shade */
+      background: #0097A7  ; /* Dark blue */
       padding: 20px;
       width: 100%;
       z-index: 1;
@@ -27,7 +27,7 @@
 
     .logout_btn {
       padding: 8px 15px;
-      background: #ff8800; /* Changed logout button color */
+      background: #34495E; /* Red */
       text-decoration: none;
       float: right;
       margin-top: -28px;
@@ -40,12 +40,12 @@
     }
 
     .logout_btn:hover {
-      background: #ff6600;
+      background: #E8F6F3; /* Lighter red on hover */
     }
 
     /* Sidebar Styles */
     .sidebar {
-      background: #34495e; /* Changed sidebar background color */
+      background: #0097A7  ; /* Dark blue */
       margin-top: 70px;
       padding-top: 30px;
       position: fixed;
@@ -57,7 +57,7 @@
     }
 
     .sidebar h4 {
-      color: #ccc;
+      color: #fff;
       margin-top: 0;
       margin-bottom: 20px;
       font-size: 18px;
@@ -76,7 +76,7 @@
     }
 
     .sidebar a:hover {
-      background: #e67e22; /* Changed hover color */
+      background: #16a085; /* Green */
     }
 
     .sidebar i {
@@ -88,7 +88,7 @@
       margin: 0;
       padding: 0;
       font-family: "Arial", sans-serif;
-      background-color: #ecf0f1; /* Changed body background color */
+      background-color: #ecf0f1; /* Light gray */
     }
 
     .content {
@@ -103,7 +103,7 @@
       position: fixed;
       bottom: 0;
       width: 100%;
-      background-color: #2c3e50; /* Changed footer background color */
+      background-color: #0097A7  ; /* Dark blue */
       color: #fff;
       text-align: center;
       padding: 30px 0;
@@ -132,7 +132,7 @@
     }
 
     label #sidebar_btn:hover {
-      color: #e67e22; /* Changed toggle hover color */
+      color: #16a085; /* Green */
     }
 
     #check:checked~.sidebar {
@@ -167,7 +167,7 @@
       <i class="fas fa-bars" id="sidebar_btn"></i>
     </label>
     <div class="left_area">
-      <h3>Educational Management</h3>
+      <h3>EasyEdu Management</h3>
     </div>
     <div class="right_area">
       <a href="/" class="logout_btn">Logout</a>
@@ -180,10 +180,8 @@
       <h4>{{request.user.first_name}}</h4>
     </center>
     <a href="/admin-dashboard"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
-    <a href="/admin-teacher"><i class="fas fa-chalkboard-teacher"></i><span>Teacher</span></a>
-    <a href="/admin-student"><i class="fas fa-user-graduate"></i><span>Student</span></a>
+    <a href="/admin-teacher"><i class="fas fa-chalkboard-teacher"></i><span>Student's Grade</span></a>
     <a href="/admin-attendance"><i class="fas fa-address-card"></i><span>Attendance</span></a>
-    <a href="/admin-fee"><i class="fas fa-search-dollar"></i><span>Fee</span></a>
     <a href="/admin-notice"><i class="fas fa-bullhorn"></i><span>Notice</span></a>
   </div>
   <div class="content">
