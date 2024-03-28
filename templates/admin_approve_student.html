@@ -1,0 +1,89 @@
+{% extends 'adminsidebar.html' %}
+
+{% block content %}
+
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <style media="screen">
+    /* Existing styles */
+    a:link {
+      text-decoration: none;
+    }
+  
+    h6 {
+      text-align: center;
+    }
+  
+    .row {
+      margin: 20px;
+    }
+  
+    .panel-heading {
+      text-align: center;
+    }
+  
+    .table {
+      padding: 10px;
+    }
+    
+    /* New styles for div1 */
+    .div1 {
+      background: linear-gradient(to right, #87CEEB, #9370DB); /* Sky blue to light purple gradient */
+      padding: 20px; /* Adjusted padding */
+      border-radius: 10px; /* Rounded corners */
+      margin-bottom: 20px; /* Adjusted margin */
+    }
+    
+    /* New styles for panel-primary in code2 */
+    .panel-primary {
+      background-color: #87CEEB; /* Sky blue */
+      border-color: #9370DB; /* Light purple */
+      border-radius: 10px; /* Rounded corners */
+      padding: 20px; /* Adjusted padding */
+      margin-bottom: 20px; /* Adjusted margin */
+    }
+    
+    /* New styles for panel-heading in code2 */
+    .panel-primary .panel-heading {
+      text-align: center; /* Center align the panel heading */
+      font-weight: bold; /* Make the panel heading bold */
+    }
+</style>
+
+
+</head>
+
+<div class="container">
+  <div class="row">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h6 class="panel-title">Approve Student</h6>
+      </div>
+      <table class="table table-hover" id="dev-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Fee</th>
+            <th>Mobile</th>
+            <th>Approve</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        {% for s in students %}
+        <tr>
+          <td>{{ s.get_name }}</td>
+          <td>{{ s.fee }}</td>
+          <td>{{ s.mobile }}</td>
+          <td><a class="btn btn-primary btn-xs" href="{% url 'approve-student' s.id %}"><span class="glyphicon glyphicon-ok"></span></a></td>
+          <td><a class="btn btn-danger btn-xs" href="{% url 'delete-student' s.id %}"><span class="glyphicon glyphicon-trash"></span></a></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

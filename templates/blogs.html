@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Courses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #76448A;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .btn-header {
+            background-color: #E74C3C;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+            text-decoration: none; /* Added */
+        }
+        .btn-header:hover {
+            background-color: #0056b3; /* Changed hover color */
+        }
+        .btn-container {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+        nav {
+            background-color: #f4f4f4;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            text-decoration: none;
+            color: #fff; /* Changed link color to white */
+            padding: 15px 20px;
+            border-radius: 8px;
+            background-color: #800080; /* Changed background color to purple */
+            transition: background-color 0.3s ease;
+            margin: 10px;
+            font-size: 18px;
+            display: inline-block;
+        }
+        nav a:hover {
+            background-color: #660066; /* Changed hover background color to darker purple */
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h2 {
+            color: #333;
+            margin-top: 30px;
+        }
+        .course-section {
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .course {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 20px;
+        }
+        .course h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .course p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .youtube-video {
+            margin-top: 10px;
+            width: 100%;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: #FDFEFE;
+            color: #000; /* Set submenu text color to black */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            padding: 10px;
+            z-index: 1;
+        }
+        .submenu a {
+            display: block;
+            color: #000; /* Set submenu link color to black */
+            padding: 5px 0;
+            text-decoration: none; /* Added */
+        }
+        .submenu a:hover {
+            background-color: #FDFEFE;
+        }
+        .toggle-submenu {
+            color: #FDFEFE ; /* Set button color */
+        }
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Easy Edu Online Courses</h1>
+        <div class="btn-container">
+            <a href="/" class="btn-header">Home</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="course-section">
+            <h2>Classes 1-10 Courses Summary</h2>
+            <div class="course">
+                <h3>Mathematics</h3>
+                <p>Learn fundamental concepts of mathematics for grades 1 to 10.</p>
+                <iframe class="youtube-video" src="https://www.youtube.com/embed/0aW3tknKuU8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="course">
+                <h3>Science</h3>
+                <p>Explore the world of science with exciting experiments and lessons.</p>
+                <iframe class="youtube-video" src="https://www.youtube.com/embed/k2I7TewWgCw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <!-- Add more courses for grades 1 to 10 here -->
+        </section>
+        <section class="course-section">
+            <h2>Classes 11-12 Courses Summary</h2>
+            <div class="course">
+                <h3>Physics</h3>
+                <p>Comprehensive course covering topics in physics for grades 11 and 12.</p>
+                <iframe class="youtube-video" src="https://www.youtube.com/embed/b1t41Q3xRM8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="course">
+                <h3>Organic Chemistry</h3>
+                <p>Learn advanced concepts in chemistry with hands-on experiments.</p>
+                <iframe class="youtube-video" src="https://www.youtube.com/embed/B_ketdzJtY8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="course">
+                <h3>Biology</h3>
+                <p>Explore the basics of biology, including cell structure, genetics, and evolution.</p>
+                <iframe class="youtube-video" src="https://www.youtube.com/embed/vwAJ8ByQH2U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <!-- Add more courses for grades 11 to 12 here -->
+        </section>
+        <section class="course-section">
+            <h2>IT & Software Development Courses</h2>
+            <div class="course">
+                <h3>Programming</h3>
+                <p>Master programming languages like Python, JavaScript, and more.</p>
+                <iframe class="youtube-video" src="https://www.youtube.com/embed/FCMxA3m_Imc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="course">
+                <h3>Web Development</h3>
+                <p>Build dynamic websites and web applications with HTML, CSS, and JavaScript.</p>
+                <iframe class="youtube-video" src="https://www.youtube.com/embed/z0n1aQ3IxWI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="course">
+                <h3>Data Science</h3>
+                <p>Discover the fundamentals of data science, including data analysis, visualization, and machine learning.</p>
+                <iframe class="youtube-video" src="https://www.youtube.com/embed/KxryzSO1Fjs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <!-- Add more skill development courses here -->
+        </section>
+        <section class="course-section">
+            <h2>Financial and Accounting Courses</h2>
+            <div class="course">
+                <h3>Cryptocurrency and Blockchain</h3>
+                <p>Explore the foundational concepts of blockchain technology, including decentralized ledgers and smart contracts.</p>
+                <iframe class="youtube-video" src="https://www.youtube.com/embed/SSo_EIwHSd4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="course">
+                <h3>Investing and Trading</h3>
+                <p>Learn the fundamentals of stock market investing, including how to research and analyze stocks, build a diversified portfolio, and manage risk.</p>
+                <iframe class="youtube-video" src="https://www.youtube.com/embed/p7HKvqRI_Bo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <!-- Add more skill development courses here -->
+        </section>
+        <section class="course-section">
+            <h2>SRK Songs</h2>
+            <div class="course">
+                <h3>Interviewing Sundar Pichai</h3>
+                <p>Google CEO</p>
+                <iframe class="youtube-video" src="https://www.youtube.com/embed/H_8UBv5bZo0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="course">
+                <h3>Chaleya</h3>
+                <p>Hum Logo ko Samajh Sako to Samjho Dilbhaar Jaani</p>
+                <iframe class="youtube-video" src="https://www.youtube.com/embed/XjMZUMVKW-w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        
+        </section>
+    </div>
+    <script>
+        document.querySelector('.toggle-submenu').addEventListener('click', function() {
+            document.getElementById('submenu1').classList.toggle('show');
+        });
+    </script>
+</body>
+</html>

@@ -51,5 +51,15 @@ urlpatterns = [
     path('password_reset_confirm/uidb64/token/',auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'), name='password_reset_confirm'),
     path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
     path('teacher-dashboard', views.teacher_dashboard_view,name='teacher-dashboard'),
+    path('admin-add-student', views.admin_add_student_view,name='admin-add-student'),
+    path('admin-view-student', views.admin_view_student_view,name='admin-view-student'),
+    # path('delete-student-from-school/<int:pk>', views.delete_student_from_school_view,name='delete-student-from-school'),
+    path('delete-student/<int:pk>', views.delete_student_view,name='delete-student'),
+    path('update-student/<int:pk>', views.update_student_view,name='update-student'),
+    path('admin-approve-student', views.admin_approve_student_view,name='admin-approve-student'),
+    path('approve-student/<int:pk>', views.approve_student_view,name='approve-student'),
+    path('admin-view-student-fee', views.admin_view_student_fee_view,name='admin-view-student-fee'),
+    path('blogs', views.blogs),
+    # path('student-dashboard', views.student_dashboard_view,name='student-dashboard'),
 
 ]

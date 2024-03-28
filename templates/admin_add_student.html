@@ -1,0 +1,144 @@
+{% extends 'adminsidebar.html' %}
+
+{% block content %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Teacher Signup</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        background-position: top;
+        text-align: center;
+      }
+  
+      .container {
+        width: 100%;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column; /* Stack items vertically */
+      }
+  
+      .heading {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        display: flex;
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        width: 150px; /* Set label width */
+        font-weight: bold;
+        margin-right: 10px;
+      }
+  
+      .form-control {
+        flex: 1; /* Grow to fill remaining space */
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+      }
+  
+      .form-control:focus {
+        border-color: #007bff;
+      }
+  
+      .btnSubmit {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+  
+      .btnSubmit:hover {
+        background-color: #0056b3;
+      }
+  
+      .text-center {
+        text-align: center;
+        margin-top: 20px; /* Adjust margin as needed */
+      }
+  
+      .text-center a {
+        color: #007bff;
+        text-decoration: none;
+      }
+  
+      .text-center a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  
+  <body>
+  
+    <!-- Signup form -->
+    <form method="post" class="container">
+      {% csrf_token %}
+      <div class="note">
+        <h2>Take Admission of a Student</h2>
+      </div>
+  
+      <div class="form-group">
+        <label for="id_first_name">First Name:</label>
+        <input type="text" id="id_first_name" name="first_name" class="form-control" placeholder="Enter your first name" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="id_last_name">Last Name:</label>
+        <input type="text" id="id_last_name" name="last_name" class="form-control" placeholder="Enter your last name" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="id_username">Username:</label>
+        <input type="text" id="id_username" name="username" class="form-control" placeholder="Choose a username" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="id_password">Password:</label>
+        <input type="password" id="id_password" name="password" class="form-control" placeholder="Choose a password" required>
+      </div>
+  
+      <!-- New fields -->
+      <div class="form-group">
+        <label for="id_roll">Roll:</label>
+        <input type="number" id="id_roll" name="roll" class="form-control" placeholder="Enter your roll" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="id_mobile">Mobile:</label>
+        <input type="text" id="id_mobile" name="mobile" class="form-control" placeholder="Enter your mobile number" required>
+      </div>
+      <div class="form-group">
+        <label for="id_fee">Fee:</label>
+        <input type="text" id="id_fee" name="fee" class="form-control" placeholder="Enter your fee" required>
+      </div>
+      <!-- End of new fields -->
+  
+      <button type="submit" class="btnSubmit">Add Student</button>
+    </form>
+  </body>
+
+  {% endblock content %}

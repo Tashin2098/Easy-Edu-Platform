@@ -14,6 +14,8 @@ def aboutUs(request):
     return render(request,"aboutus.html")
 def adminView(request):
     return render(request,'adminView.html')
+def blogs(request):
+    return render(request,"blogs.html")
 
 def studentDash(request):
     # if request.user.is_authenticated:
@@ -236,3 +238,111 @@ def teacher_dashboard_view(request):
         # 'notice':notice
     }
     return render(request,'teacher_dashboard.html',context=mydict)
+
+@login_required(login_url='studentlogin')
+@user_passes_test(is_student)
+def student_dashboard_view(request):
+    studentdata=models.StudentExtra_info.objects.all().filter(status=True,user_id=request.user.id)
+    #notice=models.Notice.objects.all()
+    mydict={
+        'roll':studentdata[0].roll,
+        'mobile':studentdata[0].mobile,
+        'fee':studentdata[0].fee,
+        # 'notice':notice
+    }
+    return render(request,'student_dashboard.html',context=mydict)
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_view_student_view(request):
+    students=models.StudentExtra_info.objects.all().filter(status=True)
+    return render(request,'admin_view_student.html',{'students':students})
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_approve_student_view(request):
+    students=models.StudentExtra_info.objects.all().filter(status=False)
+    return render(request,'admin_approve_student.html',{'students':students})
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def approve_student_view(request,pk):
+    students=models.StudentExtra_info.objects.get(id=pk)
+    students.status=True
+    students.save()
+    return redirect(reverse('admin-approve-student'))
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def delete_student_view(request,pk):
+    student=models.StudentExtra_info.objects.get(id=pk)
+    user=models.User.objects.get(id=student.user_id)
+    user.delete()
+    student.delete()
+    return redirect('admin-approve-student')
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def update_student_view(request,pk):
+    student=models.StudentExtra_info.objects.get(id=pk)
+    user=models.User.objects.get(id=student.user_id)
+    form1=forms.StudentUserForm(instance=user)
+    form2=forms.StudentExtra_info_form(instance=student)
+    mydict={'form1':form1,'form2':form2}
+    if request.method=='POST':
+        form1=forms.StudentUserForm(request.POST,instance=user)
+        form2=forms.StudentExtra_info_form(request.POST,instance=student)
+        print(form1)
+        if form1.is_valid() and form2.is_valid():
+            user=form1.save()
+            user.set_password(user.password)
+            user.save()
+            f2=form2.save(commit=False)
+            f2.status=True
+            f2.save()
+            return redirect('admin-view-student')
+    return render(request,'admin_update_student.html',context=mydict)
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def delete_student_view(request,pk):
+    student=models.StudentExtra_info.objects.get(id=pk)
+    user=models.User.objects.get(id=student.user_id)
+    user.delete()
+    student.delete()
+    return redirect('admin-approve-student')
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_add_student_view(request):
+    form1=forms.StudentUserForm()
+    form2=forms.StudentExtra_info_form()
+    mydict={'form1':form1,'form2':form2}
+    if request.method=='POST':
+        form1=forms.StudentUserForm(request.POST)
+        form2=forms.StudentExtra_info_form(request.POST)
+        if form1.is_valid() and form2.is_valid():
+            print("form is valid")
+            user=form1.save()
+            user.set_password(user.password)
+            user.save()
+
+            f2=form2.save(commit=False)
+            f2.user=user
+            f2.status=True
+            f2.save()
+
+            my_student_group = Group.objects.get_or_create(name='STUDENT')
+            my_student_group[0].user_set.add(user)
+        else:
+            print("form is invalid")
+        return HttpResponseRedirect('admin-student')
+    return render(request,'admin_add_student.html',context=mydict)
+
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_view_student_fee_view(request):
+    students=models.StudentExtra_info.objects.all().filter(status=True)
+    return render(request,'admin_fee_view_student.html',{'students':students})
+
