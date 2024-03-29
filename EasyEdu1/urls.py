@@ -60,6 +60,42 @@ urlpatterns = [
     path('approve-student/<int:pk>', views.approve_student_view,name='approve-student'),
     path('admin-view-student-fee', views.admin_view_student_fee_view,name='admin-view-student-fee'),
     path('blogs', views.blogs),
+    path('class1to3page',views.class1to3View),
+    path('class1to3-signup',views.class1to3_signup_view),
+    path('class1to3login', LoginView.as_view(template_name='class1to3login.html')),
+    path('afterlogin', views.afterlogin,name='afterlogin'),
+    path('logout', LogoutView.as_view(template_name='index.html'),name='logout'),
+    path('class1to3video', views.class1to3video,name='class1to3video'),
+    path('class4to8page',views.class4to8View),
+    path('class4to8-signup',views.class4to8_signup_view),
+    path('class4to8login', LoginView.as_view(template_name='class4to8login.html')),
+    path('afterlogin', views.afterlogin,name='afterlogin'),
+    path('class4to8video', views.class4to8video,name='class4to8video'),
+    path('class9to10page',views.class9to10View),
+    path('class9to10-signup',views.class9to10_signup_view),
+    path('class9to10login', LoginView.as_view(template_name='class9to10login.html')),
+    path('afterlogin', views.afterlogin,name='afterlogin'),
+    path('class9to10video', views.class9to10video,name='class9to10video'),
+    path('class11to12page',views.class11to12View),
+    path('class11to12-signup',views.class11to12_signup_view),
+    path('class11to12login', LoginView.as_view(template_name='class11to12login.html')),
+    path('afterlogin', views.afterlogin,name='afterlogin'),
+    path('class11to12video', views.class11to12video,name='class11to12video'),
+
+    path('financepage',views.financeView),
+    path('finance-signup',views.finance_signup_view),
+    path('financelogin', LoginView.as_view(template_name='financelogin.html')),
+    path('afterlogin', views.afterlogin,name='afterlogin'),
+    path('financevideo', views.financevideo,name='financevideo'),
+
+    path('webdesignpage',views.webdesignView),
+    path('webdesign-signup',views.webdesign_signup_view),
+    path('webdesignlogin', LoginView.as_view(template_name='webdesignlogin.html')),
+    path('afterlogin', views.afterlogin,name='afterlogin'),
+    path('webdesignvideo', views.webdesignvideo,name='webdesignvideo'),
+    
+    
+    
     # path('student-dashboard', views.student_dashboard_view,name='student-dashboard'),
 
 ]
