@@ -28,6 +28,38 @@ class TeacherExtra_info_form(forms.ModelForm):
         model=models.TeacherExtra_info
         fields=['salary','mobile','status']
 
+
+
+class class1to3SigupForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=['first_name','last_name','username','password']
+
+class class4to8SigupForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=['first_name','last_name','username','password']
+
+class class9to10SigupForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=['first_name','last_name','username','password']
+
+class class11to12SigupForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=['first_name','last_name','username','password']
+
+class financeSigupForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=['first_name','last_name','username','password']    
+
+class webdesignSigupForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=['first_name','last_name','username','password']  
+
 presence_choices=(('Present','Present'),('Absent','Absent'))
 class AttendanceForm(forms.Form):
     present_status=forms.ChoiceField( choices=presence_choices)
@@ -35,3 +67,4 @@ class AttendanceForm(forms.Form):
 
 class AskDateForm(forms.Form):
     date=forms.DateField()
+
