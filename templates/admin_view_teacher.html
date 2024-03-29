@@ -56,8 +56,8 @@
           <td>{{ t.mobile }}</td>
           <td>{{ t.salary }}</td>
           <td>{{ t.joindate }}</td>
-          {% comment %} <td><a class="btn btn-primary btn-xs" href="{% url 'update-teacher' t.id  %}"  ><span class="glyphicon glyphicon-edit"></span></a></td>
-          <td><a class="btn btn-danger btn-xs" href="{% url 'delete-teacher-from-school' t.id  %}"  ><span class="glyphicon glyphicon-trash"></span></a></td> {% endcomment %}
+          <td><a class="btn btn-primary btn-xs" href="{% url 'update-teacher' t.id  %}"  ><span class="glyphicon glyphicon-edit"></span></a></td>
+          <td><a class="btn btn-danger btn-xs" href="{% url 'delete-teacher-from-school' t.id  %}"  ><span class="glyphicon glyphicon-trash"></span></a></td>
         </tr>
         {% endfor %}
       </table>
