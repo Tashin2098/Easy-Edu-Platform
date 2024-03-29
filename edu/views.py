@@ -346,3 +346,48 @@ def admin_view_student_fee_view(request):
     students=models.StudentExtra_info.objects.all().filter(status=True)
     return render(request,'admin_fee_view_student.html',{'students':students})
 
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_attendance_view(request):
+    return render(request,'admin_attendance.html')
+
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_take_attendance_view(request,cl):
+    students=models.StudentExtra_info.objects.all().filter(cl=cl)
+    print(students)
+    aform=forms.AttendanceForm()
+    if request.method=='POST':
+        form=forms.AttendanceForm(request.POST)
+        if form.is_valid():
+            Attendances=request.POST.getlist('present_status')
+            date=form.cleaned_data['date']
+            for i in range(len(Attendances)):
+                AttendanceModel=models.Attendance()
+                AttendanceModel.cl=cl
+                AttendanceModel.date=date
+                AttendanceModel.present_status=Attendances[i]
+                AttendanceModel.roll=students[i].roll
+                AttendanceModel.save()
+            return redirect('admin-attendance')
+        else:
+            print('form invalid')
+    return render(request,'admin_take_attendance.html',{'students':students,'aform':aform})
+
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_view_attendance_view(request,cl):
+    form=forms.AskDateForm()
+    if request.method=='POST':
+        form=forms.AskDateForm(request.POST)
+        if form.is_valid():
+            date=form.cleaned_data['date']
+            attendancedata=models.Attendance.objects.all().filter(date=date,cl=cl)
+            studentdata=models.StudentExtra_info.objects.all().filter(cl=cl)
+            mylist=zip(attendancedata,studentdata)
+            return render(request,'admin_view_attendance_page.html',{'cl':cl,'mylist':mylist,'date':date})
+        else:
+            print('form invalid')
+    return render(request,'admin_view_attendance_ask_date.html',{'cl':cl,'form':form})

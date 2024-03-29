@@ -60,6 +60,9 @@ urlpatterns = [
     path('approve-student/<int:pk>', views.approve_student_view,name='approve-student'),
     path('admin-view-student-fee', views.admin_view_student_fee_view,name='admin-view-student-fee'),
     path('blogs', views.blogs),
+    path('admin-attendance', views.admin_attendance_view,name='admin-attendance'),
+    path('admin-take-attendance/<str:cl>', views.admin_take_attendance_view,name='admin-take-attendance'),
+    path('admin-view-attendance/<str:cl>', views.admin_view_attendance_view,name='admin-view-attendance'),
     # path('student-dashboard', views.student_dashboard_view,name='student-dashboard'),
 
 ]
