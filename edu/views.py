@@ -107,6 +107,21 @@ def afterlogin(request):
              return redirect('teacher-dashboard')
          else:
              return render(request,'teacher_wait_forapprove.html')
+         
+
+
+    elif is_class1to3(request.user):
+        return redirect('class1to3video')
+    elif is_class4to8(request.user):
+        return redirect('class4to8video')
+    elif is_class9to10(request.user):
+        return redirect('class9to10video')
+    elif is_class11to12(request.user):
+        return redirect('class11to12video')
+    elif is_finance(request.user):
+        return redirect('financevideo')
+    elif is_webdesign(request.user):
+        return redirect('webdesignvideo')
 
 
 @login_required(login_url='adminlogin')
@@ -202,6 +217,39 @@ def delete_teacher_view(request,pk):
     user.delete()
     teacher.delete()
     return redirect('admin-approve-teacher')
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def delete_teacher_from_school_view(request,pk):
+    teacher=models.TeacherExtra_info.objects.get(id=pk)
+    user=models.User.objects.get(id=teacher.user_id)
+    user.delete()
+    teacher.delete()
+    return redirect('admin-view-teacher')
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def update_teacher_view(request,pk):
+    teacher=models.TeacherExtra_info.objects.get(id=pk)
+    user=models.User.objects.get(id=teacher.user_id)
+
+    form1=forms.TeacherUserForm(instance=user)
+    form2=forms.TeacherExtra_info_form(instance=teacher)
+    mydict={'form1':form1,'form2':form2}
+
+    if request.method=='POST':
+        form1=forms.TeacherUserForm(request.POST,instance=user)
+        form2=forms.TeacherExtra_info_form(request.POST,instance=teacher)
+        print(form1)
+        if form1.is_valid() and form2.is_valid():
+            user=form1.save()
+            user.set_password(user.password)
+            user.save()
+            f2=form2.save(commit=False)
+            f2.status=True
+            f2.save()
+            return redirect('admin-view-teacher')
+    return render(request,'admin_update_teacher.html',context=mydict)
 
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
@@ -410,6 +458,221 @@ def admin_view_student_fee_view(request):
     students=models.StudentExtra_info.objects.all().filter(status=True)
     return render(request,'admin_fee_view_student.html',{'students':students})
 
+
+
+def class1to3View(request):
+    return render(request,'class1to3View.html')
+
+
+def class1to3_signup_view(request):
+    form=forms.class1to3SigupForm()
+    if request.method=='POST':
+        form=forms.class1to3SigupForm(request.POST)
+        if form.is_valid():
+            user=form.save()
+            user.set_password(user.password)
+            user.save()
+
+            my_class1to3_group = Group.objects.get_or_create(name='class1to3')
+            my_class1to3_group[0].user_set.add(user)
+
+            return HttpResponseRedirect('class1to3login')
+    return render(request, 'class1to3signup.html',{'form':form})
+
+
+def is_class1to3(user):
+    return user.groups.filter(name='class1to3').exists()
+
+
+    
+    
+
+@login_required(login_url='class1to3login')
+@user_passes_test(is_class1to3)
+def class1to3video(request):
+   
+
+    return render(request,'class1to3video.html')
+
+
+
+def class4to8View(request):
+    return render(request,'class4to8View.html')
+
+def class4to8_signup_view(request):
+    form=forms.class4to8SigupForm()
+    if request.method=='POST':
+        form=forms.class4to8SigupForm(request.POST)
+        if form.is_valid():
+            user=form.save()
+            user.set_password(user.password)
+            user.save()
+
+            my_class4to8_group = Group.objects.get_or_create(name='class4to8')
+            my_class4to8_group[0].user_set.add(user)
+
+            return HttpResponseRedirect('class4to8login')
+    return render(request, 'class4to8signup.html',{'form':form})
+
+
+def is_class4to8(user):
+    return user.groups.filter(name='class4to8').exists()
+
+    
+
+@login_required(login_url='class4to8login')
+@user_passes_test(is_class4to8)
+def class4to8video(request):
+   
+
+    return render(request,'class4to8video.html')
+
+
+def class9to10View(request):
+    return render(request,'class9to10View.html')
+
+def class9to10_signup_view(request):
+    form=forms.class9to10SigupForm()
+    if request.method=='POST':
+        form=forms.class9to10SigupForm(request.POST)
+        if form.is_valid():
+            user=form.save()
+            user.set_password(user.password)
+            user.save()
+
+            my_class9to10_group = Group.objects.get_or_create(name='class9to10')
+            my_class9to10_group[0].user_set.add(user)
+
+            return HttpResponseRedirect('class9to10login')
+    return render(request, 'class9to10signup.html',{'form':form})
+
+
+def is_class9to10(user):
+    return user.groups.filter(name='class9to10').exists()
+
+    
+
+@login_required(login_url='class9to10login')
+@user_passes_test(is_class9to10)
+def class9to10video(request):
+   
+
+    return render(request,'class9to10video.html')
+
+
+
+
+def class11to12View(request):
+    return render(request,'class11to12View.html')
+
+def class11to12_signup_view(request):
+    form=forms.class11to12SigupForm()
+    if request.method=='POST':
+        form=forms.class11to12SigupForm(request.POST)
+        if form.is_valid():
+            user=form.save()
+            user.set_password(user.password)
+            user.save()
+
+            my_class11to12_group = Group.objects.get_or_create(name='class11to12')
+            my_class11to12_group[0].user_set.add(user)
+
+            return HttpResponseRedirect('class11to12login')
+    return render(request, 'class11to12signup.html',{'form':form})
+
+
+def is_class11to12(user):
+    return user.groups.filter(name='class11to12').exists()
+
+
+    
+
+@login_required(login_url='class11to12login')
+@user_passes_test(is_class11to12)
+def class11to12video(request):
+   
+
+    return render(request,'class11to12video.html')
+
+
+
+
+
+
+
+
+
+def financeView(request):
+    return render(request,'financeView.html')
+
+def finance_signup_view(request):
+    form=forms.financeSigupForm()
+    if request.method=='POST':
+        form=forms.financeSigupForm(request.POST)
+        if form.is_valid():
+            user=form.save()
+            user.set_password(user.password)
+            user.save()
+
+            my_finance_group = Group.objects.get_or_create(name='finance')
+            my_finance_group[0].user_set.add(user)
+
+            return HttpResponseRedirect('financelogin')
+    return render(request, 'financesignup.html',{'form':form})
+
+
+def is_finance(user):
+    return user.groups.filter(name='finance').exists()
+
+
+    
+
+@login_required(login_url='financelogin')
+@user_passes_test(is_finance)
+def financevideo(request):
+   
+
+    return render(request,'financevideo.html')
+
+
+
+
+
+
+
+
+def webdesignView(request):
+    return render(request,'webdesignView.html')
+
+def webdesign_signup_view(request):
+    form=forms.webdesignSigupForm()
+    if request.method=='POST':
+        form=forms.webdesignSigupForm(request.POST)
+        if form.is_valid():
+            user=form.save()
+            user.set_password(user.password)
+            user.save()
+
+            my_webdesign_group = Group.objects.get_or_create(name='webdesign')
+            my_webdesign_group[0].user_set.add(user)
+
+            return HttpResponseRedirect('webdesignlogin')
+    return render(request, 'webdesignsignup.html',{'form':form})
+
+
+def is_webdesign(user):
+    return user.groups.filter(name='webdesign').exists()
+
+
+    
+
+@login_required(login_url='webdesignlogin')
+@user_passes_test(is_webdesign)
+def webdesignvideo(request):
+   
+
+    return render(request,'webdesignvideo.html')
+
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
 def admin_attendance_view(request):
@@ -455,3 +718,4 @@ def admin_view_attendance_view(request,cl):
         else:
             print('form invalid')
     return render(request,'admin_view_attendance_ask_date.html',{'cl':cl,'form':form})
+
