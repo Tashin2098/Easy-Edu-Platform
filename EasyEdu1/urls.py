@@ -60,6 +60,7 @@ urlpatterns = [
     path('approve-student/<int:pk>', views.approve_student_view,name='approve-student'),
     path('admin-view-student-fee', views.admin_view_student_fee_view,name='admin-view-student-fee'),
     path('blogs', views.blogs),
+
     path('class1to3page',views.class1to3View),
     path('class1to3-signup',views.class1to3_signup_view),
     path('class1to3login', LoginView.as_view(template_name='class1to3login.html')),
@@ -96,6 +97,16 @@ urlpatterns = [
     
     
     
+
+    path('admin-attendance', views.admin_attendance_view,name='admin-attendance'),
+    path('admin-take-attendance/<str:cl>', views.admin_take_attendance_view,name='admin-take-attendance'),
+    path('admin-view-attendance/<str:cl>', views.admin_view_attendance_view,name='admin-view-attendance'),
+
     # path('student-dashboard', views.student_dashboard_view,name='student-dashboard'),
+
+    path('teacher-attendance', views.teacher_attendance_view,name='teacher-attendance'),
+    path('teacher-take-attendance/<str:cl>', views.teacher_take_attendance_view,name='teacher-take-attendance'),
+    path('teacher-view-attendance/<str:cl>', views.teacher_view_attendance_view,name='teacher-view-attendance'),
+    
 
 ]

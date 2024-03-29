@@ -107,6 +107,21 @@ def afterlogin(request):
              return redirect('teacher-dashboard')
          else:
              return render(request,'teacher_wait_forapprove.html')
+         
+
+
+    elif is_class1to3(request.user):
+        return redirect('class1to3video')
+    elif is_class4to8(request.user):
+        return redirect('class4to8video')
+    elif is_class9to10(request.user):
+        return redirect('class9to10video')
+    elif is_class11to12(request.user):
+        return redirect('class11to12video')
+    elif is_finance(request.user):
+        return redirect('financevideo')
+    elif is_webdesign(request.user):
+        return redirect('webdesignvideo')
 
 
 @login_required(login_url='adminlogin')
@@ -239,6 +254,52 @@ def teacher_dashboard_view(request):
     }
     return render(request,'teacher_dashboard.html',context=mydict)
 
+@login_required(login_url='teacherlogin')
+@user_passes_test(is_teacher)
+def teacher_attendance_view(request):
+    return render(request,'teacher_attendance.html')
+
+@login_required(login_url='teacherlogin')
+@user_passes_test(is_teacher)
+def teacher_take_attendance_view(request,cl):
+    students=models.StudentExtra_info.objects.all().filter(cl=cl)
+    aform=forms.AttendanceForm()
+    if request.method=='POST':
+        form=forms.AttendanceForm(request.POST)
+        if form.is_valid():
+            Attendances=request.POST.getlist('present_status')
+            date=form.cleaned_data['date']
+            for i in range(len(Attendances)):
+                AttendanceModel=models.Attendance()
+                AttendanceModel.cl=cl
+                AttendanceModel.date=date
+                AttendanceModel.present_status=Attendances[i]
+                AttendanceModel.roll=students[i].roll
+                AttendanceModel.save()
+            return redirect('teacher-attendance')
+        else:
+            print('form invalid')
+    return render(request,'teacher_take_attendance.html',{'students':students,'aform':aform})
+
+
+@login_required(login_url='teacherlogin')
+@user_passes_test(is_teacher)
+def teacher_view_attendance_view(request,cl):
+    form=forms.AskDateForm()
+    if request.method=='POST':
+        form=forms.AskDateForm(request.POST)
+        if form.is_valid():
+            date=form.cleaned_data['date']
+            attendancedata=models.Attendance.objects.all().filter(date=date,cl=cl)
+            studentdata=models.StudentExtra_info.objects.all().filter(cl=cl)
+            mylist=zip(attendancedata,studentdata)
+            return render(request,'teacher_view_attendance_page.html',{'cl':cl,'mylist':mylist,'date':date})
+        else:
+            print('form invalid')
+    return render(request,'teacher_view_attendance_ask_date.html',{'cl':cl,'form':form})
+
+
+
 @login_required(login_url='studentlogin')
 @user_passes_test(is_student)
 def student_dashboard_view(request):
@@ -347,6 +408,7 @@ def admin_view_student_fee_view(request):
     return render(request,'admin_fee_view_student.html',{'students':students})
 
 
+
 def class1to3View(request):
     return render(request,'class1to3View.html')
 
@@ -370,19 +432,7 @@ def class1to3_signup_view(request):
 def is_class1to3(user):
     return user.groups.filter(name='class1to3').exists()
 
-def afterlogin(request):
-    if is_class1to3(request.user):
-        return redirect('class1to3video')
-    elif is_class4to8(request.user):
-        return redirect('class4to8video')
-    elif is_class9to10(request.user):
-        return redirect('class9to10video')
-    elif is_class11to12(request.user):
-        return redirect('class11to12video')
-    elif is_finance(request.user):
-        return redirect('financevideo')
-    elif is_webdesign(request.user):
-        return redirect('webdesignvideo')
+
     
     
 
@@ -571,3 +621,50 @@ def webdesignvideo(request):
    
 
     return render(request,'webdesignvideo.html')
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_attendance_view(request):
+    return render(request,'admin_attendance.html')
+
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_take_attendance_view(request,cl):
+    students=models.StudentExtra_info.objects.all().filter(cl=cl)
+    print(students)
+    aform=forms.AttendanceForm()
+    if request.method=='POST':
+        form=forms.AttendanceForm(request.POST)
+        if form.is_valid():
+            Attendances=request.POST.getlist('present_status')
+            date=form.cleaned_data['date']
+            for i in range(len(Attendances)):
+                AttendanceModel=models.Attendance()
+                AttendanceModel.cl=cl
+                AttendanceModel.date=date
+                AttendanceModel.present_status=Attendances[i]
+                AttendanceModel.roll=students[i].roll
+                AttendanceModel.save()
+            return redirect('admin-attendance')
+        else:
+            print('form invalid')
+    return render(request,'admin_take_attendance.html',{'students':students,'aform':aform})
+
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_view_attendance_view(request,cl):
+    form=forms.AskDateForm()
+    if request.method=='POST':
+        form=forms.AskDateForm(request.POST)
+        if form.is_valid():
+            date=form.cleaned_data['date']
+            attendancedata=models.Attendance.objects.all().filter(date=date,cl=cl)
+            studentdata=models.StudentExtra_info.objects.all().filter(cl=cl)
+            mylist=zip(attendancedata,studentdata)
+            return render(request,'admin_view_attendance_page.html',{'cl':cl,'mylist':mylist,'date':date})
+        else:
+            print('form invalid')
+    return render(request,'admin_view_attendance_ask_date.html',{'cl':cl,'form':form})
+

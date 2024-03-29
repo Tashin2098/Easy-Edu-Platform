@@ -16,7 +16,7 @@ class StudentUserForm(forms.ModelForm):
 class StudentExtra_info_form(forms.ModelForm):
     class Meta:
         model=models.StudentExtra_info
-        fields=['roll','mobile','fee','status']
+        fields=['roll','cl','mobile','fee','status']
 
 class TeacherUserForm(forms.ModelForm):
     class Meta:
@@ -27,6 +27,7 @@ class TeacherExtra_info_form(forms.ModelForm):
     class Meta:
         model=models.TeacherExtra_info
         fields=['salary','mobile','status']
+
 
 
 class class1to3SigupForm(forms.ModelForm):
@@ -58,3 +59,12 @@ class webdesignSigupForm(forms.ModelForm):
     class Meta:
         model=User
         fields=['first_name','last_name','username','password']  
+
+presence_choices=(('Present','Present'),('Absent','Absent'))
+class AttendanceForm(forms.Form):
+    present_status=forms.ChoiceField( choices=presence_choices)
+    date=forms.DateField()
+
+class AskDateForm(forms.Form):
+    date=forms.DateField()
+
