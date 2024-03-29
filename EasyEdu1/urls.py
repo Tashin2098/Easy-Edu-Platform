@@ -69,5 +69,6 @@ urlpatterns = [
     path('teacher-take-attendance/<str:cl>', views.teacher_take_attendance_view,name='teacher-take-attendance'),
     path('teacher-view-attendance/<str:cl>', views.teacher_view_attendance_view,name='teacher-view-attendance'),
     
+    path('student-attendance', views.student_attendance_view,name='student-attendance'),
 
 ]
