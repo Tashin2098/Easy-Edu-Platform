@@ -20,8 +20,10 @@ from edu import views
 from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib.auth import views as auth_views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path("", views.homepage),
     path('about-us', views.aboutUs),
     path('admin-page',views.adminView),
@@ -111,5 +113,11 @@ urlpatterns = [
     path('teacher-view-attendance/<str:cl>', views.teacher_view_attendance_view,name='teacher-view-attendance'),
     
     path('student-attendance', views.student_attendance_view,name='student-attendance'),
+
+
+    path('send-message', views.send_message, name='send_message'),
+    path('inbox', views.inbox, name='inbox'),
+    path('sent-messages', views.sent_messages, name='sent_messages'),
+    path('message-detail/<int:message_id>/', views.message_detail, name='message_detail'),
 
 ]

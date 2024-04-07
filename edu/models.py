@@ -44,3 +44,12 @@ class Attendance(models.Model):
     date=models.DateField()
     cl=models.CharField(max_length=12)
     present_status = models.CharField(max_length=10)
+
+
+class Message(models.Model):
+    sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
+    recipient = models.ForeignKey(User, related_name='received_messages', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
+    def __str__(self):
+        return f"From {self.sender.first_name} to {self.recipient.first_name} at {self.timestamp}"

@@ -2,6 +2,9 @@ from django import forms
 from django.contrib.auth.models import User
 from . import models
 
+
+
+
 class AdminSigupForm(forms.ModelForm):
     class Meta:
         model=User
@@ -67,4 +70,23 @@ class AttendanceForm(forms.Form):
 
 class AskDateForm(forms.Form):
     date=forms.DateField()
+
+def is_teacher(user):
+    return user.groups.filter(name='TEACHER').exists()
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = models.Message
+        fields = ['recipient', 'content']  # Include recipient field
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')  # Get the user passed from the view
+        super(MessageForm, self).__init__(*args, **kwargs)
+        # Filter recipients based on user type (teacher can only message students)
+        if is_teacher(user):
+            students = User.objects.filter(groups__name='STUDENT')
+            self.fields['recipient'].queryset = students
+
+
+
 
