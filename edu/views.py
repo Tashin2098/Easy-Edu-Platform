@@ -634,6 +634,13 @@ def financevideo(request):
 
     return render(request,'financevideo.html')
 
+@login_required(login_url='financelogin')
+@user_passes_test(is_finance)
+def finance_certificate(request):
+
+    return render(request, 'financecertificate.html')
+
+
 
 
 
@@ -672,6 +679,12 @@ def webdesignvideo(request):
    
 
     return render(request,'webdesignvideo.html')
+
+@login_required(login_url='webdesignlogin')
+@user_passes_test(is_webdesign)
+def webdesign_certificate(request):
+
+    return render(request, 'webdesigncertificate.html')
 
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
@@ -718,4 +731,9 @@ def admin_view_attendance_view(request,cl):
         else:
             print('form invalid')
     return render(request,'admin_view_attendance_ask_date.html',{'cl':cl,'form':form})
+
+
+
+
+
 

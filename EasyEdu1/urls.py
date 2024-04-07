@@ -111,5 +111,8 @@ urlpatterns = [
     path('teacher-view-attendance/<str:cl>', views.teacher_view_attendance_view,name='teacher-view-attendance'),
     
     path('student-attendance', views.student_attendance_view,name='student-attendance'),
+    path('financecertificate', views.finance_certificate),
+    path('webdesigncertificate', views.webdesign_certificate),
+
 
 ]
