@@ -4,6 +4,8 @@ from . import forms, models
 from django.db.models import Sum
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required,user_passes_test
+from .forms import MessageForm
+from .models import Message
 
 # Create your views here.
 def homepage(request):
@@ -634,6 +636,13 @@ def financevideo(request):
 
     return render(request,'financevideo.html')
 
+@login_required(login_url='financelogin')
+@user_passes_test(is_finance)
+def finance_certificate(request):
+
+    return render(request, 'financecertificate.html')
+
+
 
 
 
@@ -672,6 +681,12 @@ def webdesignvideo(request):
    
 
     return render(request,'webdesignvideo.html')
+
+@login_required(login_url='webdesignlogin')
+@user_passes_test(is_webdesign)
+def webdesign_certificate(request):
+
+    return render(request, 'webdesigncertificate.html')
 
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
@@ -718,4 +733,49 @@ def admin_view_attendance_view(request,cl):
         else:
             print('form invalid')
     return render(request,'admin_view_attendance_ask_date.html',{'cl':cl,'form':form})
+
+
+
+
+
+@login_required
+def send_message(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.save()
+            return redirect('inbox')
+    else:
+        form = MessageForm()
+    return render(request, 'send_message.html', {'form': form})
+
+@login_required
+def inbox(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST, user=request.user)  # Pass 'user' key
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.save()
+            return redirect('inbox')
+    else:
+        form = MessageForm(user=request.user)  # Pass 'user' key
+    inbox_messages = Message.objects.filter(recipient=request.user)
+    return render(request, 'inbox.html', {'form': form, 'inbox_messages': inbox_messages})
+
+@login_required
+def sent_messages(request):
+    sent_messages = MessageForm.objects.filter(sender=request.user)
+    return render(request, 'sent_messages.html', {'sent_messages': sent_messages})
+
+@login_required
+def message_detail(request, message_id):
+    message = MessageForm.objects.get(id=message_id)
+    return render(request, 'message_detail.html', {'message': message})
+
+
+
+
 

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'edu',
     'widget_tweaks',
+    'channels',
 ]
 
 MIDDLEWARE = [

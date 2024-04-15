@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Completion</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 80px;
+            border: 6px solid #333;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            min-height: 500px; /* Adjust the height as needed */
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+        p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .certificate-details {
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .signature {
+            position: absolute;
+            padding: -10px;
+            bottom: 0;
+            right: 0;
+            margin: 20px;
+            text-align: right;
+            font-size: 20px;
+            color: #333;
+            font-style: italic;
+            font-family: cursive;
+        }
+        .certificate-details strong {
+            font-style: italic;
+            font-family: cursive;
+            font-size: 24px;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Certificate of Completion</h1>
+        <div class="certificate-details">
+            <p>This Certificate is presented to:</p>
+            <p><strong style="font-size: 24px;">{{ request.user.first_name }} {{ request.user.last_name }}</strong></p>
+            <p>For successfully completing the online course on Web Design and Development.</p>
+            <p>Course Title: Web Design and Development</p>
+            <p>Key Topics Covered:</p>
+            <ul>
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript</li>
+                <li>Responsive Web Design</li>
+                <li>Frontend Frameworks (e.g., Bootstrap)</li>
+                <!-- Add additional topics here -->
+            </ul>
+            <p>This certificate is awarded in recognition of the dedication, commitment, and hard work demonstrated throughout the course. By completing this course, {{ request.user.first_name }} has gained valuable knowledge and skills in web design and development, which are essential for a successful career in web development, user experience design, or related fields.</p>
+        </div>
+        <div class="signature">
+            <p>Easy Edu</p>
+            <p>30 March 2024</p>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <a href="#" class="button">Download Certificate</a>
+    </div>
+</body>
+</html>
