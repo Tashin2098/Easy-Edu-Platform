@@ -86,6 +86,18 @@ class MessageForm(forms.ModelForm):
         if is_teacher(user):
             students = User.objects.filter(groups__name='STUDENT')
             self.fields['recipient'].queryset = students
+            self.fields['recipient'].empty_label = "Students"
+        else:  # Assuming a student can only message teachers
+            teachers = User.objects.filter(groups__name='TEACHER')
+            self.fields['recipient'].queryset = teachers
+            self.fields['recipient'].empty_label = "Teachers"
+        # Customize label to display first name and last name
+        self.fields['recipient'].label_from_instance = lambda obj: f"{obj.first_name} {obj.last_name}"
+
+class NoticeForm(forms.ModelForm):
+    class Meta:
+        model=models.Notice
+        fields='__all__'
 
 
 

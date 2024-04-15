@@ -776,6 +776,22 @@ def message_detail(request, message_id):
     return render(request, 'message_detail.html', {'message': message})
 
 
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_notice_view(request):
+    form=forms.NoticeForm()
+    if request.method=='POST':
+        form=forms.NoticeForm(request.POST)
+        if form.is_valid():
+            form=form.save(commit=False)
+            form.by=request.user.first_name
+            form.save()
+            return redirect('admin-dashboard')
+    return render(request,'admin_notice.html',{'form':form})
+
+
+
+
 
 
 

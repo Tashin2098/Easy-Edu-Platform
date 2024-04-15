@@ -38,17 +38,18 @@
 {% include 'admin_dashcards.html' %}
 
 <br><br>
-{% endblock %}
-
-{% comment %} <div class="w3-panel w3-blue ">
+<div class="w3-panel w3-blue ">
   <p>Notice Board</p>
-</div><br> {% endcomment %}
-{% comment %} {%for n in notice%}
+</div><br>
+{%for n in notice%}
 <div class="alert">
   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
   <strong>{{n.date}} ||By :{{n.by}} </strong><br> {{n.message}}
 </div>
-{%endfor%} {% endcomment %}
+{%endfor%}
+{% endblock %}
+
+
 
 
 

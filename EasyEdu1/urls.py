@@ -122,5 +122,6 @@ urlpatterns = [
     path('inbox', views.inbox, name='inbox'),
     path('sent-messages', views.sent_messages, name='sent_messages'),
     path('message-detail/<int:message_id>/', views.message_detail, name='message_detail'),
+    path('admin-notice', views.admin_notice_view,name='admin-notice'),
 
 ]
