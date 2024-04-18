@@ -79,6 +79,11 @@
         .button:hover {
             background-color: #555;
         }
+        @media print {
+            .button-container {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -107,7 +112,13 @@
     </div>
 
     <div class="button-container">
-        <a href="#" class="button">Download Certificate</a>
+        <button class="button" onclick="printCertificate()">Download Certificate</button>
     </div>
+
+    <script>
+        function printCertificate() {
+            window.print();
+        }
+    </script>
 </body>
 </html>

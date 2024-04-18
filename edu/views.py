@@ -643,6 +643,19 @@ def finance_certificate(request):
     return render(request, 'financecertificate.html')
 
 
+@login_required(login_url='financelogin')
+@user_passes_test(is_finance)
+def finance_nextpage(request):
+
+    return render(request, 'financenextpage.html')
+
+@login_required(login_url='financelogin')
+@user_passes_test(is_finance)
+def finance_another(request):
+
+    return render(request, 'financeanother.html')
+
+
 
 
 
@@ -687,6 +700,22 @@ def webdesignvideo(request):
 def webdesign_certificate(request):
 
     return render(request, 'webdesigncertificate.html')
+
+@login_required(login_url='webdesignlogin')
+@user_passes_test(is_webdesign)
+def webdesign_nextpage(request):
+
+    return render(request, 'webdesignnextpage.html')
+
+@login_required(login_url='webdesignlogin')
+@user_passes_test(is_webdesign)
+def webdesign_anotherpage(request):
+
+    return render(request, 'webdesignanotherpage.html')
+
+
+
+    
 
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
@@ -788,6 +817,8 @@ def admin_notice_view(request):
             form.save()
             return redirect('admin-dashboard')
     return render(request,'admin_notice.html',{'form':form})
+
+
 
 
 
