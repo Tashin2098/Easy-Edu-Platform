@@ -58,4 +58,7 @@ class Message(models.Model):
 class Notice(models.Model):
     date=models.DateField(auto_now=True)
     by=models.CharField(max_length=20,null=True,default='education')
+    
     message=models.CharField(max_length=500)
+
+
