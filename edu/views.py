@@ -10,8 +10,6 @@ from .models import Grades, StudentExtra_info
 
 # Create your views here.
 def homepage(request):
-    # if request.user.is_authenticated:
-    #     return HttpResponseRedirect('afterlogin')
     return render(request, "index.html")
 def aboutUs(request):
     return render(request,"aboutus.html")
@@ -21,13 +19,11 @@ def blogs(request):
     return render(request,"blogs.html")
 
 def studentDash(request):
-    # if request.user.is_authenticated:
-    #     return HttpResponseRedirect('afterlogin')
     return render(request,'studentdashboard.html')
 def teacherView(request):
-    # if request.user.is_authenticated:
-    #     return HttpResponseRedirect('afterlogin')
     return render(request,'teacherview.html')
+
+
 def admin_signup_view(request):
     form=forms.AdminSigupForm()
     if request.method=='POST':
@@ -142,7 +138,7 @@ def admin_dashboard_view(request):
     studentfee=models.StudentExtra_info.objects.filter(status=True).aggregate(Sum('fee',default=0))
     pendingstudentfee=models.StudentExtra_info.objects.filter(status=False).aggregate(Sum('fee'))
 
-    # notice=models.Notice.objects.all()
+    notice=models.Notice.objects.all()
     mydict={
         'teachercount':teachercount,
         'pendingteachercount':pendingteachercount,
@@ -156,7 +152,7 @@ def admin_dashboard_view(request):
         'studentfee':studentfee['fee__sum'],
         'pendingstudentfee':pendingstudentfee['fee__sum'],
 
-        # 'notice':notice
+        'notice':notice
 
     }
 
@@ -281,12 +277,12 @@ def teacher_dashboard_view(request):
 @user_passes_test(is_teacher)
 def teacher_dashboard_view(request):
     teacherdata=models.TeacherExtra_info.objects.all().filter(status=True,user_id=request.user.id)
-    #notice=models.Notice.objects.all()
+    notice=models.Notice.objects.all()
     mydict={
         'salary':teacherdata[0].salary,
         'mobile':teacherdata[0].mobile,
         'date':teacherdata[0].joindate,
-        # 'notice':notice
+        'notice':notice
     }
     return render(request,'teacher_dashboard.html',context=mydict)
 
@@ -340,12 +336,12 @@ def teacher_view_attendance_view(request,cl):
 @user_passes_test(is_student)
 def student_dashboard_view(request):
     studentdata=models.StudentExtra_info.objects.all().filter(status=True,user_id=request.user.id)
-    #notice=models.Notice.objects.all()
+    notice=models.Notice.objects.all()
     mydict={
         'roll':studentdata[0].roll,
         'mobile':studentdata[0].mobile,
         'fee':studentdata[0].fee,
-        # 'notice':notice
+        'notice':notice
     }
     return render(request,'student_dashboard.html',context=mydict)
 
@@ -644,6 +640,19 @@ def finance_certificate(request):
     return render(request, 'financecertificate.html')
 
 
+@login_required(login_url='financelogin')
+@user_passes_test(is_finance)
+def finance_nextpage(request):
+
+    return render(request, 'financenextpage.html')
+
+@login_required(login_url='financelogin')
+@user_passes_test(is_finance)
+def finance_another(request):
+
+    return render(request, 'financeanother.html')
+
+
 
 
 
@@ -688,6 +697,22 @@ def webdesignvideo(request):
 def webdesign_certificate(request):
 
     return render(request, 'webdesigncertificate.html')
+
+@login_required(login_url='webdesignlogin')
+@user_passes_test(is_webdesign)
+def webdesign_nextpage(request):
+
+    return render(request, 'webdesignnextpage.html')
+
+@login_required(login_url='webdesignlogin')
+@user_passes_test(is_webdesign)
+def webdesign_anotherpage(request):
+
+    return render(request, 'webdesignanotherpage.html')
+
+
+
+    
 
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
@@ -787,8 +812,11 @@ def admin_notice_view(request):
             form=form.save(commit=False)
             form.by=request.user.first_name
             form.save()
+            print(form)
             return redirect('admin-dashboard')
+        
     return render(request,'admin_notice.html',{'form':form})
+
 
 
 # @login_required(login_url='teacherlogin')
@@ -818,6 +846,26 @@ def admin_notice_view(request):
 #             return render(request, 'teacher_publish_gradesheet.html', {'error_message': error_message})
 #     else:
 #         return render(request, 'teacher_publish_gradesheet.html')
+
+@login_required(login_url='teacherlogin')
+@user_passes_test(is_teacher)
+def teacher_notice_view(request):
+    form=forms.NoticeForm()
+    if request.method=='POST':
+        form=forms.NoticeForm(request.POST)
+        if form.is_valid():
+            form=form.save(commit=False)
+            form.by=request.user.first_name
+            form.save()
+            return redirect('teacher-dashboard')
+        else:
+            print('form invalid')
+    return render(request,'teacher_notice.html',{'form':form})
+
+
+
+
+
 
 
 

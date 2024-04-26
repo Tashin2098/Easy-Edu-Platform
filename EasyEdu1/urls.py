@@ -115,7 +115,11 @@ urlpatterns = [
     
     path('student-attendance', views.student_attendance_view,name='student-attendance'),
     path('financecertificate', views.finance_certificate),
+    path('financenextpage', views.finance_nextpage),
+    path('financeanotherpage', views.finance_another),
     path('webdesigncertificate', views.webdesign_certificate),
+    path('webdesignnextpage', views.webdesign_nextpage),
+    path('webdesignanotherpage', views.webdesign_anotherpage),
 
 
 
@@ -124,6 +128,8 @@ urlpatterns = [
     path('sent-messages', views.sent_messages, name='sent_messages'),
     path('message-detail/<int:message_id>/', views.message_detail, name='message_detail'),
     path('admin-notice', views.admin_notice_view,name='admin-notice'),
+    path('teacher-notice', views.teacher_notice_view,name='teacher-notice'),
+
 
     # path('publish-grades/', views.teacher_publish_grades, name='publish_grades'),
     # path('view-grades/', views.teacher_view_grades, name='view_grades'),
