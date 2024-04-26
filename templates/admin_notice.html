@@ -1,0 +1,98 @@
+{% extends 'adminsidebar.html' %}
+{% load widget_tweaks %}
+
+
+
+
+{% block content %}
+
+<head>
+    <style media="screen">
+      body {
+        background-color: #f0f0f0; /* Light background color */
+        font-family: Arial, sans-serif; /* Font family */
+      }
+  
+      .note {
+        text-align: center;
+        height: 60px; /* Height of the note */
+        background: linear-gradient(to right, #4CAF50, #2196F3); /* Gradient background */
+        color: #fff;
+        font-weight: bold;
+        line-height: 60px; /* Line height of the note */
+        border-radius: 5px; /* Rounded corners */
+        margin-bottom: 20px; /* Bottom margin */
+      }
+  
+      .form-content {
+        padding: 20px; /* Padding */
+        border-radius: 5px; /* Rounded corners */
+        background-color: #fff; /* Background color */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+      }
+  
+      .form-group {
+        margin-bottom: 20px; /* Bottom margin for form groups */
+      }
+  
+      .form-control {
+        border: 1px solid #ced4da; /* Border color */
+        border-radius: 5px; /* Rounded corners */
+        height: 150px; /* Auto height */
+        padding: 10px; /* Padding */
+      }
+  
+      .btnSubmit {
+        border: none;
+        border-radius: 5px; /* Rounded corners */
+        padding: 15px; /* Padding */
+        width: 100%; /* Full width */
+        cursor: pointer;
+        background-color: #4CAF50; /* Button background color */
+        color: #fff;
+        font-weight: bold;
+        transition: background-color 0.3s ease; /* Smooth transition */
+      }
+  
+      .btnSubmit:hover {
+        background-color: #45a049; /* Darker background color on hover */
+      }
+    </style>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+
+<!------ notice page for  by admin(sumit)  ---------->
+<form method="post">
+  {% csrf_token %}
+  <div class="container register-form">
+    <div class="form">
+      <div class="note">
+        <p>Announce Something</p>
+      </div>
+
+      <div class="form-content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              {% render_field form.message class="form-control" placeholder="Write Your Message Here" %}
+            </div>
+            <div class="form-group">
+              {% render_field form.by type="hidden"  class="form-control" placeholder="Your Name" %}
+            </div>
+          </div>
+
+        </div>
+        <button type="submit" class="btnSubmit">Submit</button>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+
+
+{% endblock content %}

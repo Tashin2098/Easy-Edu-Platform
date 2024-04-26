@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from . import models
+from .models import Grades
 
 
 
@@ -86,7 +87,40 @@ class MessageForm(forms.ModelForm):
         if is_teacher(user):
             students = User.objects.filter(groups__name='STUDENT')
             self.fields['recipient'].queryset = students
+            self.fields['recipient'].empty_label = "Students"
+        else:  # Assuming a student can only message teachers
+            teachers = User.objects.filter(groups__name='TEACHER')
+            self.fields['recipient'].queryset = teachers
+            self.fields['recipient'].empty_label = "Teachers"
+        # Customize label to display first name and last name
+        self.fields['recipient'].label_from_instance = lambda obj: f"{obj.first_name} {obj.last_name}"
 
+class NoticeForm(forms.ModelForm):
+    class Meta:
+        model=models.Notice
+        fields='__all__'
+
+
+
+class GradesForm(forms.ModelForm):
+    class Meta:
+        model = Grades
+        fields = ['roll', 'cl', 'grade_sheet']
+
+    def __init__(self, *args, **kwargs):
+        super(GradesForm, self).__init__(*args, **kwargs)
+        self.fields['roll'].widget.attrs.update({'class': 'form-control'})
+        self.fields['cl'].widget.attrs.update({'class': 'form-control'})
+        self.fields['grade_sheet'].widget.attrs.update({'class': 'form-control'})
+
+
+
+class GradesViewForm(forms.Form):
+    roll = forms.CharField(max_length=50, label='Roll Number', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    cl = forms.CharField(max_length=50, label='Class', widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
+    
 
 
 

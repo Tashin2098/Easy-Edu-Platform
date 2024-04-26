@@ -124,7 +124,7 @@ p {
             <ul>
                 {% for message in inbox_messages %}
                     <li>
-                        <p>From: {{ message.sender }}</p>
+                        <p>From: {{ message.sender.first_name }}</p>
                         <p>Content: {{ message.content }}</p>
                         <p>Timestamp: {{ message.timestamp }}</p>
                         <!-- Add any additional message details you want to display -->

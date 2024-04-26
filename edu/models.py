@@ -53,3 +53,18 @@ class Message(models.Model):
     content = models.TextField()
     def __str__(self):
         return f"From {self.sender.first_name} to {self.recipient.first_name} at {self.timestamp}"
+    
+
+class Notice(models.Model):
+    date=models.DateField(auto_now=True)
+    by=models.CharField(max_length=20,null=True,default='education')
+    message=models.CharField(max_length=500)
+
+class Grades(models.Model):
+    roll=models.CharField(max_length=10,null=True)
+    cl=models.CharField(max_length=12)
+    grade_sheet = models.CharField(max_length=2, choices=[('A+', 'A+'), ('A', 'A'), ('A-', 'A-'), ('B', 'B'), ('C', 'C'), ('D', 'D'), ('F', 'F')])
+
+
+
+

@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required,user_passes_test
 from .forms import MessageForm
 from .models import Message
+from .models import Grades, StudentExtra_info
 
 # Create your views here.
 def homepage(request):
@@ -776,6 +777,79 @@ def message_detail(request, message_id):
     return render(request, 'message_detail.html', {'message': message})
 
 
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def admin_notice_view(request):
+    form=forms.NoticeForm()
+    if request.method=='POST':
+        form=forms.NoticeForm(request.POST)
+        if form.is_valid():
+            form=form.save(commit=False)
+            form.by=request.user.first_name
+            form.save()
+            return redirect('admin-dashboard')
+    return render(request,'admin_notice.html',{'form':form})
 
+
+# @login_required(login_url='teacherlogin')
+# @user_passes_test(is_teacher)
+# def teacher_grdes(request):
+#     return render(request,'teacher_grades.html')
+
+# def teacher_publish_grades(request):
+#     if request.method == 'POST':
+#         roll = request.POST.get('roll')
+#         cl = request.POST.get('class')
+#         grade_sheet = request.POST.get('grade_sheet')
+
+#         # Check if the student exists
+#         student = StudentExtra_info.objects.filter(roll=roll, cl=cl).first()
+#         if student:
+#             # Check if the grades already exist for the student
+#             existing_grade = Grades.objects.filter(roll=roll, cl=cl).first()
+#             if existing_grade:
+#                 existing_grade.grade_sheet = grade_sheet
+#                 existing_grade.save()
+#             else:
+#                 Grades.objects.create(roll=roll, cl=cl, grade_sheet=grade_sheet)
+#             return redirect('teacher_view_grades')
+#         else:
+#             error_message = "Student with roll {} in class {} not found.".format(roll, cl)
+#             return render(request, 'teacher_publish_gradesheet.html', {'error_message': error_message})
+#     else:
+#         return render(request, 'teacher_publish_gradesheet.html')
+
+
+
+
+
+@login_required(login_url='teacherlogin')
+@user_passes_test(is_teacher)
+def teacher_gradesheet(request):
+    if request.method == 'POST':
+        form = forms.GradesForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('teacher-view-gradesheet')
+    else:
+        form = forms.GradesForm()
+    return render(request, 'teacher_gradesheet.html', {'form': form})
+
+
+
+
+@login_required(login_url='teacherlogin')
+@user_passes_test(is_teacher)
+def teacher_view_gradesheet(request):
+    if request.method == 'POST':
+        form = forms.GradesViewForm(request.POST)
+        if form.is_valid():
+            roll = form.cleaned_data['roll']
+            cl = form.cleaned_data['cl']
+            grades = models.Grades.objects.filter(roll=roll, cl=cl)
+            return render(request, 'teacher_view_gradesheet.html', {'grades': grades})
+    else:
+        form = forms.GradesViewForm()
+    return render(request, 'teacher_view_gradesheet_ask_details.html', {'form': form})
 
 

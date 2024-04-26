@@ -21,6 +21,7 @@ from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib.auth import views as auth_views
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     
@@ -122,5 +123,22 @@ urlpatterns = [
     path('inbox', views.inbox, name='inbox'),
     path('sent-messages', views.sent_messages, name='sent_messages'),
     path('message-detail/<int:message_id>/', views.message_detail, name='message_detail'),
+    path('admin-notice', views.admin_notice_view,name='admin-notice'),
 
+    # path('publish-grades/', views.teacher_publish_grades, name='publish_grades'),
+    # path('view-grades/', views.teacher_view_grades, name='view_grades'),
+
+
+
+
+    path('teacher-gradesheet', views.teacher_gradesheet, name='teacher-gradesheet'),
+    path('teacher-view-gradesheet', views.teacher_view_gradesheet, name='teacher-view-gradesheet'),
+
+   
 ]
+   
+
+
+
+
+
