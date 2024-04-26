@@ -77,7 +77,7 @@ def is_teacher(user):
 class MessageForm(forms.ModelForm):
     class Meta:
         model = models.Message
-        fields = ['recipient', 'content']  # Include recipient field
+        fields = ['recipient', 'content', 'attachment']  # Include recipient field
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')  # Get the user passed from the view
@@ -93,6 +93,7 @@ class MessageForm(forms.ModelForm):
             self.fields['recipient'].empty_label = "Teachers"
         # Customize label to display first name and last name
         self.fields['recipient'].label_from_instance = lambda obj: f"{obj.first_name} {obj.last_name}"
+        self.fields['attachment'].required = False
 
 class NoticeForm(forms.ModelForm):
     class Meta:
@@ -100,6 +101,10 @@ class NoticeForm(forms.ModelForm):
         fields='__all__'
 
 
+class ConsultationHourForm(forms.ModelForm):
+    class Meta:
+        model = models.ConsultationHour
+        fields ='__all__'  # Add 'teacher' field to the form
 
 
 

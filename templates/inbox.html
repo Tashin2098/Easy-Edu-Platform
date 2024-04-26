@@ -119,22 +119,25 @@ p {
 
     <!-- Inbox Messages Section -->
     <div>
-        <h2>Inbox Messages</h2>
-        {% if inbox_messages %}
-            <ul>
-                {% for message in inbox_messages %}
-                    <li>
-                        <p>From: {{ message.sender.first_name }}</p>
-                        <p>Content: {{ message.content }}</p>
-                        <p>Timestamp: {{ message.timestamp }}</p>
-                        <!-- Add any additional message details you want to display -->
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No messages in your inbox.</p>
-        {% endif %}
-    </div>
+      <h2>Inbox Messages</h2>
+      {% if inbox_messages %}
+          <ul>
+              {% for message in inbox_messages %}
+                  <li>
+                      <p>From: {{ message.sender.first_name }}</p>
+                      <p>Content: {{ message.content }}</p>
+                      {% if message.attachment %}
+                          <p>Attachment: <a href="{{ message.attachment }}">Download</a></p>
+                      {% endif %}
+                      <p>Timestamp: {{ message.timestamp }}</p>
+                      <!-- Add any additional message details you want to display -->
+                  </li>
+              {% endfor %}
+          </ul>
+      {% else %}
+          <p>No messages in your inbox.</p>
+      {% endif %}
+  </div>
 
 </body>
 </html>

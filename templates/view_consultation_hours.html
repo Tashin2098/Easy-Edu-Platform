@@ -1,0 +1,102 @@
+{% extends 'studentsidebar.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Consultation Hours</title>
+    <style>
+        /* Style for the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Style for table headers */
+th {
+    background-color: #f2f2f2; /* Light gray */
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Style for table data */
+td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+/* Style for alternate rows */
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Lighter gray */
+}
+
+/* Style for links */
+a {
+    color: #007bff; /* Blue */
+    text-decoration: none;
+}
+
+/* Hover effect for links */
+a:hover {
+    text-decoration: underline;
+}
+.day-options {
+    display: none;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    background-color: #fff;
+}
+</style>
+</head>
+<body>
+    <h2>Consultation Hours OF Teachers</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Teacher Name</th>
+                <th>Day</th>
+                <th>Time</th>
+                <th>Class Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for consultation_hour in form %}
+            <tr>
+                <td>{{ consultation_hour.given_by }}</td>
+                <td>
+                    <!-- Display day as a clickable button -->
+                    <button onclick="toggleDayOptions(this)">
+                        Days
+                    </button>
+                    <!-- Day options dropdown -->
+                    <div class="day-options">
+                        <!-- Add your day options here -->
+                        <span>{{ consultation_hour.day }}</span>
+                    </div>
+                </td>
+                <td>{{ consultation_hour.time }}</td>
+                <td><a href="{{ consultation_hour.class_link }}">{{ consultation_hour.class_link }}</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No consultation hours available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        // Function to toggle display of day options
+        function toggleDayOptions(button) {
+            var dayOptions = button.nextElementSibling;
+            if (dayOptions.style.display === "none") {
+                dayOptions.style.display = "block";
+            } else {
+                dayOptions.style.display = "none";
+            }
+        }
+    </script>
+</body>
+{% endblock content %}

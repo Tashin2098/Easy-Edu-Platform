@@ -51,6 +51,7 @@ class Message(models.Model):
     recipient = models.ForeignKey(User, related_name='received_messages', on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
+    attachment = models.FileField(upload_to='message_attachments/', blank=True, null=True)
     def __str__(self):
         return f"From {self.sender.first_name} to {self.recipient.first_name} at {self.timestamp}"
     
@@ -60,5 +61,15 @@ class Notice(models.Model):
     by=models.CharField(max_length=20,null=True,default='education')
     
     message=models.CharField(max_length=500)
+
+class ConsultationHour(models.Model):
+    day = models.CharField(max_length=100)
+    time = models.CharField(max_length=100)
+    class_link = models.URLField()
+    given_by=models.CharField(max_length=20,null=True,default='education')
+
+
+    def __str__(self):
+        return f"{self.day} - {self.time}"
 
 

@@ -833,7 +833,24 @@ def teacher_notice_view(request):
     return render(request,'teacher_notice.html',{'form':form})
 
 
-
+@login_required
+@user_passes_test(is_teacher)
+def upload_consultation_hour(request):
+    if request.method == 'POST':
+        form = forms.ConsultationHourForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.given_by = request.user.first_name
+            form.save()
+            return redirect('teacher-dashboard')  # Assuming the URL name is 'teacher-dashboard'
+    else:
+        form = forms.ConsultationHourForm()
+    return render(request, 'upload_consultation_hour.html', {'form': form})
+@login_required
+@user_passes_test(is_student)
+def view_consultation_hours(request):
+    form = models.ConsultationHour.objects.all()
+    return render(request, 'view_consultation_hours.html', {'form': form})
 
 
 

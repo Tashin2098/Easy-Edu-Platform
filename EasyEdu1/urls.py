@@ -20,6 +20,9 @@ from edu import views
 from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib.auth import views as auth_views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -128,6 +131,8 @@ urlpatterns = [
     path('message-detail/<int:message_id>/', views.message_detail, name='message_detail'),
     path('admin-notice', views.admin_notice_view,name='admin-notice'),
     path('teacher-notice', views.teacher_notice_view,name='teacher-notice'),
+    path('upload_consultation_hour', views.upload_consultation_hour, name='upload_consultation_hour'),
+    path('view_consultation_hour', views.view_consultation_hours, name='view_consultation_hour'),
 
 
 ]
