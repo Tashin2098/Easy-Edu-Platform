@@ -62,6 +62,7 @@ class Notice(models.Model):
     
     message=models.CharField(max_length=500)
 
+
 class ConsultationHour(models.Model):
     day = models.CharField(max_length=100)
     time = models.CharField(max_length=100)
@@ -71,5 +72,13 @@ class ConsultationHour(models.Model):
 
     def __str__(self):
         return f"{self.day} - {self.time}"
+
+class Grades(models.Model):
+    roll=models.CharField(max_length=10,null=True)
+    cl=models.CharField(max_length=12)
+    grade_sheet = models.CharField(max_length=2, choices=[('A+', 'A+'), ('A', 'A'), ('A-', 'A-'), ('B', 'B'), ('C', 'C'), ('D', 'D'), ('F', 'F')])
+
+
+
 
 

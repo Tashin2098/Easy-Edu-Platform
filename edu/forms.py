@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from . import models
+from .models import Grades
 
 
 
@@ -105,6 +106,21 @@ class ConsultationHourForm(forms.ModelForm):
     class Meta:
         model = models.ConsultationHour
         fields ='__all__'  # Add 'teacher' field to the form
+
+
+grade_choices=(('A+', 'A+'), ('A', 'A'), ('A-', 'A-'), ('B', 'B'), ('C', 'C'), ('D', 'D'), ('F', 'F'))
+class GradesForm(forms.Form):
+   
+   grade_sheet=forms.ChoiceField( choices=grade_choices)
+
+
+
+
+
+
+
+    
+
 
 
 

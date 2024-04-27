@@ -1,0 +1,78 @@
+{% extends 'studentsidebar.html' %}
+{% block content %}
+
+<head>
+
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <style media="screen">
+    a:link {
+      text-decoration: none;
+    }
+
+    h6 {
+      text-align: center;
+    }
+
+    .row {
+      margin: 50px; /* Adjusted margin */
+    }
+
+    .panel-primary {
+      border-color: #337ab7; /* Changed panel border color */
+    }
+
+    .panel-heading {
+      background-color: #337ab7; /* Changed panel heading background color */
+      color: #fff; /* Changed panel heading text color */
+    }
+
+    .panel-title {
+      font-size: 20px; /* Increased panel title font size */
+    }
+
+    th {
+      background-color: #337ab7; /* Changed table header background color */
+      color: #fff; /* Changed table header text color */
+    }
+
+    .table {
+      margin-top: 20px; /* Adjusted table margin */
+    }
+
+    .table th,
+    .table td {
+      text-align: center; /* Centered table cell content */
+    }
+  </style>
+
+</head>
+<div class="container">
+  <div class="row">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h6 class="panel-title">My Gradesheet</h6>
+      </div>
+      <table class="table table-hover" id="dev-table">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Student Roll</th>
+            <th>My Grade</th>
+          </tr>
+        </thead>
+        {%for gradedata,studentdata in mylist %}
+        <tr>
+          <td>{{studentdata.get_name}}</td>
+          <td>{{studentdata.roll}}</td>
+          <td>{{gradedata.grade_sheet}}</td>
+        </tr>
+        {%endfor%}
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

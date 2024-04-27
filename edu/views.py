@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from .forms import MessageForm
 from .models import Message
 
+
 # Create your views here.
 def homepage(request):
     return render(request, "index.html")
@@ -817,6 +818,9 @@ def admin_notice_view(request):
     return render(request,'admin_notice.html',{'form':form})
 
 
+
+
+
 @login_required(login_url='teacherlogin')
 @user_passes_test(is_teacher)
 def teacher_notice_view(request):
@@ -851,6 +855,54 @@ def upload_consultation_hour(request):
 def view_consultation_hours(request):
     form = models.ConsultationHour.objects.all()
     return render(request, 'view_consultation_hours.html', {'form': form})
+
+
+@login_required(login_url='teacherlogin')
+@user_passes_test(is_teacher)
+def teacher_gradesheet_view(request):
+    return render(request,'teacher_gradesheet.html')
+
+
+@login_required(login_url='teacherlogin')
+@user_passes_test(is_teacher)
+def teacher_take_gradesheet_view(request,cl):
+    students=models.StudentExtra_info.objects.all().filter(cl=cl)
+    aform=forms.GradesForm()
+    if request.method=='POST':
+        form=forms.GradesForm(request.POST)
+        if form.is_valid():
+            Grade=request.POST.getlist('grade_sheet')
+            for i in range(len(Grade)):
+                GradeModel=models.Grades()
+                GradeModel.cl=cl
+                GradeModel.grade_sheet=Grade[i]
+                GradeModel.roll=students[i].roll
+                GradeModel.save()
+            return redirect('teacher-gradesheet')
+        else:
+            print('form invalid')
+    return render(request,'teacher_take_gradesheet.html',{'students':students,'aform':aform})
+
+
+@login_required(login_url='teacherlogin')
+@user_passes_test(is_teacher)
+def teacher_view_gradesheet_view(request, cl):
+    students = models.StudentExtra_info.objects.filter(cl=cl)
+    grades = models.Grades.objects.filter(cl=cl) 
+    mylist = zip(students, grades)
+    return render(request, 'teacher_view_gradesheet.html', {'cl': cl, 'mylist': mylist})
+
+
+@login_required(login_url='studentlogin')
+@user_passes_test(is_student)
+def student_gradesheet_view(request):
+    studentdata=models.StudentExtra_info.objects.all().filter(user_id=request.user.id,status=True)
+    gradedata=models.Grades.objects.all().filter(cl=studentdata[0].cl,roll=studentdata[0].roll)
+    mylist=zip(gradedata,studentdata)
+    return render(request,'student_view_gradesheet_page.html',{'mylist':mylist})
+
+
+
 
 
 

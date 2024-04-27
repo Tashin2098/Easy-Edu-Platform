@@ -24,6 +24,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     
@@ -134,5 +135,18 @@ urlpatterns = [
     path('upload_consultation_hour', views.upload_consultation_hour, name='upload_consultation_hour'),
     path('view_consultation_hour', views.view_consultation_hours, name='view_consultation_hour'),
 
+    path('teacher-gradesheet', views.teacher_gradesheet_view,name='teacher-gradesheet'),
 
+    path('teacher-take-gradesheet/<str:cl>', views.teacher_take_gradesheet_view,name='teacher-take-gradesheet'),
+    path('teacher-view-gradesheet/<str:cl>', views.teacher_view_gradesheet_view,name='teacher-view-gradesheet'),
+
+    path('student-grade', views.student_gradesheet_view,name='student-grade'),
+
+   
 ]
+   
+
+
+
+
+
