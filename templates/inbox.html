@@ -8,100 +8,100 @@
     <style>
       /* CSS for Inbox Page */
 
-/* Body and Header */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f2f2f2;
-}
+      /* Body and Header */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+      }
 
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
-}
+      header {
+        background-color: #333;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
 
-/* Message Form */
-form {
-  background-color: #fff;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+      /* Message Form */
+      form {
+        background-color: #fff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
 
-form input[type="text"],
-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+      form input[type="text"],
+      form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
 
-form button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+      form button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
 
-form button:hover {
-  background-color: #45a049;
-}
+      form button:hover {
+        background-color: #45a049;
+      }
 
-/* Inbox Messages Section */
-div {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+      /* Inbox Messages Section */
+      div {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
 
-h2 {
-  margin-top: 0;
-}
+      h2 {
+        margin-top: 0;
+      }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
 
-li {
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-}
+      li {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+      }
 
-p {
-  margin: 0;
-}
+      p {
+        margin: 0;
+      }
 
-/* Responsive Design */
-@media screen and (max-width: 600px) {
-  form {
-      padding: 10px;
-  }
+      /* Responsive Design */
+      @media screen and (max-width: 600px) {
+        form {
+          padding: 10px;
+        }
 
-  form input[type="text"],
-  form textarea {
-      padding: 8px;
-  }
+        form input[type="text"],
+        form textarea {
+          padding: 8px;
+        }
 
-  form button {
-      padding: 10px 15px;
-  }
+        form button {
+          padding: 10px 15px;
+        }
 
-  div {
-      padding: 10px;
-  }
-}
-</style>
+        div {
+          padding: 10px;
+        }
+      }
+    </style>
 </head>
 <body>
 
@@ -113,7 +113,22 @@ p {
     <!-- Message Form -->
     <form action="" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div>
+            <label for="search_recipient">Search recipient:</label>
+            <input type="text" id="search_recipient" name="search_recipient">
+        </div>
+        <div>
+            {{ form.recipient.label_tag }} {{ form.recipient }}
+        </div>
+        <div>
+            {{ form.content.label_tag }} {{ form.content }}
+        </div>
+        <div>
+            {{ form.attachment.label_tag }} {{ form.attachment }}
+        </div>
+        <div>
+            {{ form.image.label_tag }} {{ form.image }}
+        </div>
         <button type="submit">Send Message</button>
     </form>
 
@@ -129,6 +144,9 @@ p {
                       {% if message.attachment %}
                           <p>Attachment: <a href="{{ message.attachment }}">Download</a></p>
                       {% endif %}
+                      {% if message.image %}
+                          <p><img src="{{ message.image.url }}" alt="Image" style="max-width: 100px;"></p>
+                      {% endif %}
                       <p>Timestamp: {{ message.timestamp }}</p>
                       <!-- Add any additional message details you want to display -->
                   </li>
@@ -138,6 +156,28 @@ p {
           <p>No messages in your inbox.</p>
       {% endif %}
   </div>
+
+  <script>
+      document.getElementById('search_recipient').addEventListener('keyup', function() {
+          const query = this.value;
+          fetch(`/search-recipient/?q=${query}`)
+              .then(response => response.json())
+              .then(data => {
+                  const recipientSelect = document.getElementById('id_recipient');
+                  recipientSelect.innerHTML = '';
+                  if (data.length === 0) {
+                      recipientSelect.innerHTML = '<option>No recipients found</option>';
+                  } else {
+                      data.forEach(recipient => {
+                          const option = document.createElement('option');
+                          option.value = recipient.id;
+                          option.textContent = recipient.name;
+                          recipientSelect.appendChild(option);
+                      });
+                  }
+              });
+      });
+  </script>
 
 </body>
 </html>

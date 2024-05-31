@@ -52,6 +52,7 @@ class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     attachment = models.FileField(upload_to='message_attachments/', blank=True, null=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True) 
     def __str__(self):
         return f"From {self.sender.first_name} to {self.recipient.first_name} at {self.timestamp}"
     

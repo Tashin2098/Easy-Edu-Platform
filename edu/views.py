@@ -6,6 +6,8 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required,user_passes_test
 from .forms import MessageForm
 from .models import Message
+from django.http import JsonResponse
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -780,7 +782,7 @@ def send_message(request):
 @login_required
 def inbox(request):
     if request.method == 'POST':
-        form = MessageForm(request.POST, user=request.user)  # Pass 'user' key
+        form = MessageForm(request.POST, request.FILES, user=request.user)  # Pass 'user' key
         if form.is_valid():
             message = form.save(commit=False)
             message.sender = request.user
@@ -790,7 +792,17 @@ def inbox(request):
         form = MessageForm(user=request.user)  # Pass 'user' key
     inbox_messages = Message.objects.filter(recipient=request.user)
     return render(request, 'inbox.html', {'form': form, 'inbox_messages': inbox_messages})
+@login_required
+def search_recipient(request):
+    query = request.GET.get('q', '')
+    user = request.user
+    if is_teacher(user):
+        recipients = User.objects.filter(groups__name='STUDENT', first_name__icontains=query)
+    else:
+        recipients = User.objects.filter(groups__name='TEACHER', first_name__icontains=query)
 
+    results = [{'id': recipient.id, 'name': f"{recipient.first_name} {recipient.last_name}"} for recipient in recipients]
+    return JsonResponse(results, safe=False)
 @login_required
 def sent_messages(request):
     sent_messages = MessageForm.objects.filter(sender=request.user)
@@ -884,22 +896,56 @@ def teacher_take_gradesheet_view(request,cl):
     return render(request,'teacher_take_gradesheet.html',{'students':students,'aform':aform})
 
 
+# @login_required(login_url='teacherlogin')
+# @user_passes_test(is_teacher)
+# def teacher_view_gradesheet_view(request, cl):
+#     students = models.StudentExtra_info.objects.filter(cl=cl)
+#     grades = models.Grades.objects.filter(cl=cl) 
+#     mylist = zip(students, grades)
+#     return render(request, 'teacher_view_gradesheet.html', {'cl': cl, 'mylist': mylist})
+
 @login_required(login_url='teacherlogin')
 @user_passes_test(is_teacher)
 def teacher_view_gradesheet_view(request, cl):
-    students = models.StudentExtra_info.objects.filter(cl=cl)
-    grades = models.Grades.objects.filter(cl=cl) 
-    mylist = zip(students, grades)
-    return render(request, 'teacher_view_gradesheet.html', {'cl': cl, 'mylist': mylist})
+    form = forms.AskCourseForm()  # Use AskCourseForm instead of AskDateForm
+    if request.method == 'POST':
+        form = forms.AskCourseForm(request.POST)
+        if form.is_valid():
+            course = form.cleaned_data['course']
+            grades = models.Grades.objects.all().filter(course=course, cl=cl)
+            studentdata = models.StudentExtra_info.objects.all().filter(cl=cl)
+            mylist = zip(grades, studentdata)
+            return render(request, 'teacher_view_gradesheet.html', {'cl': cl, 'mylist': mylist, 'course': course})
+        else:
+            print('Form is invalid')
+    return render(request, 'teacher_view_gradesheet_ask_course.html', {'cl': cl, 'form': form})
+
+
+
+# @login_required(login_url='studentlogin')
+# @user_passes_test(is_student)
+# def student_gradesheet_view(request):
+#     studentdata=models.StudentExtra_info.objects.all().filter(user_id=request.user.id,status=True)
+#     gradedata=models.Grades.objects.all().filter(cl=studentdata[0].cl,roll=studentdata[0].roll)
+#     mylist=zip(gradedata,studentdata)
+#     return render(request,'student_view_gradesheet_page.html',{'mylist':mylist})
 
 
 @login_required(login_url='studentlogin')
 @user_passes_test(is_student)
 def student_gradesheet_view(request):
-    studentdata=models.StudentExtra_info.objects.all().filter(user_id=request.user.id,status=True)
-    gradedata=models.Grades.objects.all().filter(cl=studentdata[0].cl,roll=studentdata[0].roll)
-    mylist=zip(gradedata,studentdata)
-    return render(request,'student_view_gradesheet_page.html',{'mylist':mylist})
+    form=forms.AskCourseForm()
+    if request.method=='POST':
+        form=forms.AskCourseForm(request.POST)
+        if form.is_valid():
+            course = form.cleaned_data['course']
+            studentdata=models.StudentExtra_info.objects.all().filter(user_id=request.user.id,status=True)
+            gradedata=models.Attendance.objects.all().filter(course=course,cl=studentdata[0].cl,roll=studentdata[0].roll)
+            mylist=zip(gradedata,studentdata)
+            return render(request,'student_view_gradesheet_page.html',{'mylist':mylist,'course':course})
+        else:
+            print('form invalid')
+    return render(request,'student_view_gradesheet_ask_date.html',{'form':form})
 
 
 

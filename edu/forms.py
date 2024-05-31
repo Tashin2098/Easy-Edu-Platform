@@ -76,25 +76,29 @@ def is_teacher(user):
     return user.groups.filter(name='TEACHER').exists()
 
 class MessageForm(forms.ModelForm):
+    search_recipient = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Search recipient by name'}),
+    )
+
     class Meta:
         model = models.Message
-        fields = ['recipient', 'content', 'attachment']  # Include recipient field
+        fields = ['recipient', 'content', 'attachment', 'image']  # Do not include search_recipient here
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user')  # Get the user passed from the view
+        user = kwargs.pop('user')
         super(MessageForm, self).__init__(*args, **kwargs)
-        # Filter recipients based on user type (teacher can only message students)
         if is_teacher(user):
-            students = User.objects.filter(groups__name='STUDENT')
-            self.fields['recipient'].queryset = students
+            self.fields['recipient'].queryset = User.objects.filter(groups__name='STUDENT')
             self.fields['recipient'].empty_label = "Students"
-        else:  # Assuming a student can only message teachers
-            teachers = User.objects.filter(groups__name='TEACHER')
-            self.fields['recipient'].queryset = teachers
+        else:
+            self.fields['recipient'].queryset = User.objects.filter(groups__name='TEACHER')
             self.fields['recipient'].empty_label = "Teachers"
-        # Customize label to display first name and last name
         self.fields['recipient'].label_from_instance = lambda obj: f"{obj.first_name} {obj.last_name}"
         self.fields['attachment'].required = False
+        self.fields['image'].required = False
+
+
 
 class NoticeForm(forms.ModelForm):
     class Meta:
@@ -112,6 +116,9 @@ grade_choices=(('A+', 'A+'), ('A', 'A'), ('A-', 'A-'), ('B', 'B'), ('C', 'C'), (
 class GradesForm(forms.Form):
    
    grade_sheet=forms.ChoiceField( choices=grade_choices)
+
+class AskCourseForm(forms.Form):
+    course = forms.CharField(max_length=100)
 
 
 

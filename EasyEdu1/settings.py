@@ -141,3 +141,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'from@gmail.com' # this email will be used to send emails
 EMAIL_HOST_PASSWORD = 'from121@121'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
